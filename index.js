@@ -3,12 +3,8 @@
   ------------
   Añadir un título para cada uno de los inputs: username, password, confirm password
 */
-// usamos getElemtByID para poder localizar con el id a "username". Con el inserAdjacentHTML agregamos a un sitio específico un elemento seleccionado, en nuestro caso con beforeBegin antes del elemento y usamos como etiqueta de texto <label> 
 document.getElementById('username').insertAdjacentHTML('beforeBegin','<label for="username"> Username </label>');
 
-document.getElementById('password').insertAdjacentHTML('beforeBegin','<label for="password"> Password </label>');
-
-document.getElementById('confirmPassword').insertAdjacentHTML('beforeBegin','<label for="confirmPassword"> Confirm Password </label>');
 
 
 /*
@@ -16,18 +12,14 @@ document.getElementById('confirmPassword').insertAdjacentHTML('beforeBegin','<la
   -----------
   Agregar una validación a cada input y que muestre un mensaje de error si no hay nada escrito dentro del input
 */
-//con esta función lo que queremos es comprobar si existe en el código algún span. 
+
 const checkInput = (event) => {
+  const errorElement = Array.from(event.target.parentNode.querySelectorAll('span'));
   
-  const errorElement = event.target.parentNode.querySelectorAll('span');
-
-  // queremos comprobar que el input esté vacío o no, y que además no haya un error previo. ¿Cómo sabemos que no tenemos un error previo?, al no tener un span. 
-
   if (event.target.value === '' && !errorElement.length){
   event.target.insertAdjacentHTML('afterEnd', '<span class="text-danger"> Required </span>')
   }
   
-  // esto lo tenemos por si hay un error previo y que hayamos escrito algo en el input (valu !== ''), entonces lo que hacemos es quitarlo, buscamos todos los elementos que son span y los eliminamos. OJO no volver a usar span.
   if (errorElement && event.target.value !== '') { errorElement.forEach(elem => elem.remove());
  }
 };
@@ -35,7 +27,6 @@ const checkInput = (event) => {
 document.getElementById('username').addEventListener('blur',checkInput);
 document.getElementById('password').addEventListener('blur',checkInput);
 document.getElementById('confirmPassword').addEventListener('blur',checkInput);
-//con esto agregamos escuchadores de eventos, usamos el evento "blur" para hacer que se desencadene la función checkInput cuando salimos del input. Con ello verificaremos y mostraremos el mensaje de error cuando sea necesario.
 
 /*
   Exercise 03
